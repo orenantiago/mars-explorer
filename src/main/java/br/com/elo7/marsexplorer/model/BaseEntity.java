@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import javax.persistence.GeneratedValue;
 
 @Data
-public class Reusable {
+public class BaseEntity {
     @Id
     @GeneratedValue(generator = "uuid")
     private String id;
