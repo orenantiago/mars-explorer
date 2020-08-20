@@ -1,9 +1,13 @@
 package br.com.elo7.marsexplorer.model;
 
+import lombok.EqualsAndHashCode;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-public class Size {
+
+@EqualsAndHashCode
+public class Position {
     @NotNull
     @Min(1)
     private Integer x;
@@ -11,4 +15,5 @@ public class Size {
     @NotNull
     @Min(1)
     private Integer y;
+
 }
