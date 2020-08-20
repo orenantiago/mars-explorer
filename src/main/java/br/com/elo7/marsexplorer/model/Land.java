@@ -1,13 +1,16 @@
 package br.com.elo7.marsexplorer.model;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.HashMap;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "lands")
 public class Land extends BaseEntity implements Serializable {
@@ -15,6 +18,6 @@ public class Land extends BaseEntity implements Serializable {
     @Valid
     private Position size;
 
-    @OneToMany
-    HashMap<Position, Probe> probes;
+//    @OneToMany
+//    HashMap<Position, Probe> probes;
 }

@@ -1,5 +1,6 @@
 package br.com.elo7.marsexplorer.validation;
 
+import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityException;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolation;
@@ -15,6 +16,13 @@ public class MarsExplorerValidator {
 
     public MarsExplorerValidator() {
         this.validator = Validation.buildDefaultValidatorFactory().getValidator();
+    }
+
+    public <T> void throwableValidate(T object) {
+        List<MarsExplorerError> errors = validate(object);
+        if (!errors.isEmpty()) {
+            throw new UnprocessableEntityException().withErrors(errors);
+        }
     }
 
     public<T> List<MarsExplorerError> validate(T object) {

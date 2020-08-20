@@ -1,15 +1,18 @@
 package br.com.elo7.marsexplorer.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.data.annotation.Id;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-@Data
+@Getter
+@Setter
+@MappedSuperclass
 public class BaseEntity {
     @Id
-    @GeneratedValue(generator = "uuid")
-    private String id;
-
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    private Long id;
 }
