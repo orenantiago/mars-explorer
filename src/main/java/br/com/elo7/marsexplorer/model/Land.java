@@ -7,7 +7,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -18,6 +18,7 @@ public class Land extends BaseEntity implements Serializable {
     @Valid
     private Position size;
 
-//    @OneToMany
-//    HashMap<Position, Probe> probes;
+    @OneToMany
+    @MapKey(name = "position")
+    Map<Position, Probe> probes;
 }

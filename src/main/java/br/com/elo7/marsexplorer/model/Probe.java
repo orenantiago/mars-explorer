@@ -14,4 +14,5 @@ import java.io.Serializable;
 public class Probe extends BaseEntity implements Serializable {
     @NotNull
     private Direction direction;
+    private Position position;
 }
