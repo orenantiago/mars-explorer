@@ -10,6 +10,8 @@ import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+
 @Service
 public class LandService {
     @Autowired
@@ -18,8 +20,12 @@ public class LandService {
     @Autowired
     private MarsExplorerValidator validator;
 
+    @Autowired
+    private ProbeService probeService;
+
     public Land create(Land land) {
         validator.throwableValidate(land);
+        checkReferences(land);
         return repository.save(land);
     }
 
@@ -31,9 +37,21 @@ public class LandService {
 
     public Land update(Long id, Land land) {
         findById(id);
-        validator.throwableValidate(land);
         land.setId(id);
+        validator.throwableValidate(land);
+        checkReferences(land);
         return repository.save(land);
+    }
+
+    public void validate(Land land) {
+        validator.throwableValidate(land);
+        checkReferences(land);
+    }
+
+    private void checkReferences(Land land) {
+        if (land.hasProbes()) {
+            land.getPositionProbeMap().forEach((position, probe) -> probe = probeService.findOrCreate(probe));
+        }
     }
 
     public void deleteById(Long id) {

@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Embeddable
-@EqualsAndHashCode
+@EqualsAndHashCode(of = {"x", "y"})
 public class Position {
     @NotNull
     @Min(1)

@@ -20,5 +20,9 @@ public class Land extends BaseEntity implements Serializable {
 
     @OneToMany
     @MapKey(name = "position")
-    Map<Position, Probe> probes;
+    Map<Position, Probe> positionProbeMap;
+
+    public Boolean hasProbes() {
+        return positionProbeMap != null && positionProbeMap.size() != 0;
+    }
 }

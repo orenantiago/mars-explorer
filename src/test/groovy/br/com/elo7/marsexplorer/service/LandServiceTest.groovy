@@ -2,20 +2,27 @@ package br.com.elo7.marsexplorer.service
 
 import br.com.elo7.marsexplorer.Elo7Test
 import br.com.elo7.marsexplorer.model.Land
+import br.com.elo7.marsexplorer.model.Position
+import br.com.elo7.marsexplorer.model.Probe
 import br.com.elo7.marsexplorer.repository.LandRepository
+import br.com.elo7.marsexplorer.repository.ProbeRepository
 import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException
 import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityException
 import br.com.six2six.fixturefactory.Fixture
+import javafx.geometry.Pos
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
 class LandServiceTest extends Elo7Test {
     @Autowired
-    LandService service;
+    LandService service
 
     @Autowired
-    LandRepository repository;
+    LandRepository repository
+
+    @Autowired
+    ProbeService probeService
 
     def "given valid Land should create it" () {
         given:
@@ -40,6 +47,42 @@ class LandServiceTest extends Elo7Test {
 
         then:
         thrown UnprocessableEntityException
+    }
+
+    def "given Land with unknown Probe should not create it" () {
+        given:
+        def land = Fixture.from(Land.class).gimme("valid")
+        def probe = Fixture.from(Probe.class).gimme("valid")
+        probe.id = 123
+
+        land.positionProbeMap = new HashMap<Position, Probe>() {{
+            put(probe.position, probe)
+        }}
+
+        when:
+        def created = service.create(land)
+
+        then:
+        thrown NotFoundException
+    }
+
+    def "given Land with Probe without id should create Land and Probe" () {
+        given:
+        def land = Fixture.from(Land.class).gimme("valid")
+        def probe = Fixture.from(Probe.class).gimme("valid")
+
+        land.positionProbeMap = new HashMap<Position, Probe>() {{
+            put(probe.position, probe)
+        }}
+
+        when:
+        def createdLand = service.create(land)
+        def probeFromLand = createdLand.positionProbeMap.get(probe.position)
+        def createdProbe = probeService.findById(probeFromLand.id)
+
+        then:
+        createdLand
+        createdProbe.id == probeFromLand.id
     }
 
     def "given existing Land should find it" () {

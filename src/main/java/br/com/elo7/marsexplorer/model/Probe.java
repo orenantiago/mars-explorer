@@ -15,4 +15,8 @@ public class Probe extends BaseEntity implements Serializable {
     @NotNull
     private Direction direction;
     private Position position;
+
+    public Boolean hasId() {
+        return getId() != null;
+    }
 }
