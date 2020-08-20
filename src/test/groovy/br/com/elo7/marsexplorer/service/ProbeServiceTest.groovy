@@ -36,10 +36,34 @@ class ProbeServiceTest extends Elo7Test {
         probe.direction = null
 
         when:
-        def created = service.create(probe)
+        service.create(probe)
 
         then:
         thrown UnprocessableEntityException
+    }
+
+    def "given unknown Probe should create it when findOrCreate" () {
+        given:
+        def probe = Fixture.from(Probe.class).gimme("valid")
+
+        when:
+        def created = service.findOrCreate(probe)
+        def found = repository.findById(created.id)
+
+        then:
+        created
+        found
+    }
+
+    def "given known Probe should find it when findOrCreate" () {
+        given:
+        def probe = Fixture.from(Probe.class).gimme("valid")
+        def existing = service.create(probe)
+        when:
+        def found = service.findOrCreate(existing)
+
+        then:
+        found.id == existing.id
     }
 
     def "given existing Probe should find it" () {

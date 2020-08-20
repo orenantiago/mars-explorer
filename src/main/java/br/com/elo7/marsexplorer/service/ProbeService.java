@@ -28,6 +28,13 @@ public class ProbeService {
         return repository.findById(id).orElseThrow(() -> new NotFoundException().withErrors(Errors.ID_REQUIRED));
     }
 
+    public Probe findOrCreate(Probe probe) {
+        if (probe == null)
+            throw new BadRequestException().withErrors(Errors.PROBE_REQUIRED);
+
+        return probe.hasId() ? findById(probe.getId()) : create(probe);
+    }
+
     public Probe update(Long id, Probe probe) {
         findById(id);
         validator.throwableValidate(probe);
