@@ -5,11 +5,10 @@ import br.com.elo7.marsexplorer.model.Land
 import br.com.elo7.marsexplorer.model.Position
 import br.com.elo7.marsexplorer.model.Probe
 import br.com.elo7.marsexplorer.repository.LandRepository
-import br.com.elo7.marsexplorer.repository.ProbeRepository
 import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException
 import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityException
 import br.com.six2six.fixturefactory.Fixture
-import javafx.geometry.Pos
+import br.com.six2six.fixturefactory.Rule
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
@@ -26,7 +25,7 @@ class LandServiceTest extends Elo7Test {
 
     def "given valid Land should create it" () {
         given:
-        def land = Fixture.from(Land.class).gimme("valid")
+        def land = landToCreate()
 
         when:
         def created = service.create(land)
@@ -39,7 +38,7 @@ class LandServiceTest extends Elo7Test {
 
     def "given invalid Land should validate it when creating" () {
         given:
-        def land = Fixture.from(Land.class).gimme("valid")
+        def land = landToCreate()
         land.size = null
 
         when:
@@ -51,29 +50,42 @@ class LandServiceTest extends Elo7Test {
 
     def "given Land with unknown Probe should not create it" () {
         given:
-        def land = Fixture.from(Land.class).gimme("valid")
+        def land = landToCreate()
         def probe = Fixture.from(Probe.class).gimme("valid")
         probe.id = 123
 
-        land.positionProbeMap = new HashMap<Position, Probe>() {{
-            put(probe.position, probe)
-        }}
+        land.probes = Arrays.asList(probe)
 
         when:
-        def created = service.create(land)
+        service.create(land)
 
         then:
         thrown NotFoundException
     }
 
+    def "given Land with two Probes put on same space should not create it" () {
+        given:
+        def land = landToCreate()
+        def position = Fixture.from(Position.class).gimme("valid")
+        def probes = Fixture.from(Probe.class).gimme(2, "valid", new Rule() {{
+            add("position", position)
+        }})
+
+        land.probes = probes
+
+        when:
+        service.create(land)
+
+        then:
+        thrown UnprocessableEntityException
+    }
+
     def "given Land with Probe without id should create Land and Probe" () {
         given:
-        def land = Fixture.from(Land.class).gimme("valid")
+        def land = landToCreate()
         def probe = Fixture.from(Probe.class).gimme("valid")
 
-        land.positionProbeMap = new HashMap<Position, Probe>() {{
-            put(probe.position, probe)
-        }}
+        land.probes = Arrays.asList(probe)
 
         when:
         def createdLand = service.create(land)
@@ -87,7 +99,7 @@ class LandServiceTest extends Elo7Test {
 
     def "given existing Land should find it" () {
         given:
-        def land = Fixture.from(Land.class).gimme("valid")
+        def land = landToCreate()
         def existing = service.create(land)
 
         when:
@@ -121,7 +133,7 @@ class LandServiceTest extends Elo7Test {
 
     def "given existing Land should delete it" () {
         given:
-        def land = Fixture.from(Land.class).gimme("valid")
+        def land = landToCreate()
         def existing = service.create(land)
 
         when:
@@ -134,7 +146,7 @@ class LandServiceTest extends Elo7Test {
     def "given non existing Land should not update it" () {
         given:
         def unknownId = 123
-        def land = Fixture.from(Land.class).gimme("valid")
+        def land = landToCreate()
 
         when:
         service.update(unknownId, land)
@@ -145,7 +157,7 @@ class LandServiceTest extends Elo7Test {
 
     def "given existing Land should update it" () {
         given:
-        def land = Fixture.from(Land.class).gimme("valid")
+        def land = landToCreate()
         def existing = service.create(land)
         def newLand = Fixture.from(Land.class).gimme("valid")
 
@@ -160,7 +172,7 @@ class LandServiceTest extends Elo7Test {
 
     def "given invalid Land should validate it when updating" () {
         given:
-        def land = Fixture.from(Land.class).gimme("valid")
+        def land = landToCreate()
         def existing = service.create(land)
         land.size = null
         when:
@@ -170,4 +182,8 @@ class LandServiceTest extends Elo7Test {
         thrown UnprocessableEntityException
     }
 
+    private def landToCreate() {
+        def land = Fixture.from(Land.class).gimme("valid")
+        return land
+    }
 }
