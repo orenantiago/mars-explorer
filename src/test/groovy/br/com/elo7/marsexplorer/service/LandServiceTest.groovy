@@ -52,9 +52,10 @@ class LandServiceTest extends Elo7Test {
         given:
         def land = landToCreate()
         def probe = Fixture.from(Probe.class).gimme("valid")
+        def position = new Position(0, 0);
         probe.id = 123
 
-        land.probes = Arrays.asList(probe)
+        land.probes.put(position, probe)
 
         when:
         service.create(land)
@@ -63,33 +64,17 @@ class LandServiceTest extends Elo7Test {
         thrown NotFoundException
     }
 
-    def "given Land with two Probes put on same space should not create it" () {
-        given:
-        def land = landToCreate()
-        def position = Fixture.from(Position.class).gimme("valid")
-        def probes = Fixture.from(Probe.class).gimme(2, "valid", new Rule() {{
-            add("position", position)
-        }})
-
-        land.probes = probes
-
-        when:
-        service.create(land)
-
-        then:
-        thrown UnprocessableEntityException
-    }
-
     def "given Land with Probe without id should create Land and Probe" () {
         given:
         def land = landToCreate()
         def probe = Fixture.from(Probe.class).gimme("valid")
+        def position = new Position(0, 0);
 
-        land.probes = Arrays.asList(probe)
+        land.probes.put(position, probe)
 
         when:
         def createdLand = service.create(land)
-        def probeFromLand = createdLand.positionProbeMap.get(probe.position)
+        def probeFromLand = createdLand.probes.get(position)
         def createdProbe = probeService.findById(probeFromLand.id)
 
         then:

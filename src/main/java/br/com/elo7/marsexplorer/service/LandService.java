@@ -46,22 +46,11 @@ public class LandService {
 
     public void validate(Land land) {
         validator.throwableValidate(land);
-        putProbesOnField(land);
+        checkReferences(land);
     }
 
-    public void putProbesOnField(Land land) {
-        if (land.getProbes() != null) {
-            land.getProbes().stream().forEach(probe -> putProbe(land, probe));
-        }
-    }
-
-    public void putProbe(Land land, Probe probe) {
-        Probe probeInPosition = land.probeInPosition(probe.getPosition());
-        if (probeInPosition != null) {
-            throw new UnprocessableEntityException()
-                    .withErrors(new MarsExplorerError(String.format("two probes put on same space")));
-        }
-        land.getPositionProbeMap().put(probe.getPosition(), probeService.findOrCreate(probe));
+    public void checkReferences(Land land) {
+        land.getProbes().forEach((position, probe) -> probe = probeService.findOrCreate(probe));
     }
 
     public void deleteById(Long id) {

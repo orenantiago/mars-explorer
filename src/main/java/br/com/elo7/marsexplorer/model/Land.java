@@ -22,17 +22,13 @@ public class Land extends BaseEntity implements Serializable {
     private Position size;
 
     @OneToMany
-    @MapKey(name = "position")
-    Map<Position, Probe> positionProbeMap = new HashMap<>();
-
-    @Transient
-    List<Probe> probes;
+    Map<Position, Probe> probes = new HashMap<>();
 
     public Probe probeInPosition(Position position) {
-        return positionProbeMap.get(position);
+        return probes.get(position);
     }
 
     public Boolean hasProbes() {
-        return positionProbeMap != null && positionProbeMap.size() != 0;
+        return probes != null && probes.size() != 0;
     }
 }
