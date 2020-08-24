@@ -2,8 +2,6 @@ package br.com.elo7.marsexplorer.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Min;
@@ -26,5 +24,9 @@ public class Position {
     public Position(Integer x, Integer y) {
         this.x = x;
         this.y = y;
+    }
+
+    public static Position at(Integer x, Integer y) {
+        return new Position(x, y);
     }
 }

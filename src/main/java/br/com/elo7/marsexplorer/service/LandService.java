@@ -34,7 +34,7 @@ public class LandService {
     public Land findById(Long id) {
         if (id == null)
             throw new BadRequestException().withErrors(Errors.ID_REQUIRED);
-        return repository.findById(id).orElseThrow(() -> new NotFoundException().withErrors(Errors.ID_REQUIRED));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException().withErrors(Errors.LAND_NOT_FOUND));
     }
 
     public Land update(Long id, Land land) {
