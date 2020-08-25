@@ -1,5 +1,6 @@
 package br.com.elo7.marsexplorer.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +12,7 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 @MappedSuperclass
+@EqualsAndHashCode(of="id")
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

@@ -1,7 +1,9 @@
 package br.com.elo7.marsexplorer.service
 
 import br.com.elo7.marsexplorer.Elo7Test
+import br.com.elo7.marsexplorer.model.Direction
 import br.com.elo7.marsexplorer.model.Land
+import br.com.elo7.marsexplorer.model.Movement
 import br.com.elo7.marsexplorer.model.Position
 import br.com.elo7.marsexplorer.model.Probe
 import br.com.elo7.marsexplorer.repository.LandRepository
@@ -80,6 +82,49 @@ class LandServiceTest extends Elo7Test {
         then:
         createdLand
         createdProbe.id == probeFromLand.id
+    }
+
+    def "given Land with Probes that will collide should throw error" () {
+        given:
+        def land = landToCreate()
+        def probe = Fixture.from(Probe.class).gimme("valid", new Rule() {{
+            add("direction", Direction.N)
+            add("movements", Arrays.asList(Movement.M, Movement.R, Movement.M))
+        }})
+
+        def probe2 = Fixture.from(Probe.class).gimme("valid")
+
+        land.probes.put(Position.at(0,0), probe)
+        land.probes.put(Position.at(1,1), probe2)
+
+
+        when:
+        service.create(land)
+
+        then:
+        thrown UnprocessableEntityException
+    }
+
+    def "given Land with Probe with movements should execute them on land creation" () {
+        given:
+        def land = landToCreate()
+        def probe = Fixture.from(Probe.class).gimme("valid", new Rule() {{
+            add("direction", Direction.N)
+            add("movements", Arrays.asList(Movement.M, Movement.R, Movement.M))
+        }})
+
+        land.probes.put(Position.at(0,0), probe)
+
+
+        when:
+        def createdLand = service.create(land)
+        def probeFromLand = createdLand.probes.get(Position.at(1,1))
+        def createdProbe = probeService.findById(probeFromLand.id)
+
+        then:
+        createdLand
+        probeFromLand == createdProbe
+        createdProbe.direction == Direction.E
     }
 
     def "given Land with Probe put outside land should not create it" () {
