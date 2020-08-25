@@ -82,6 +82,21 @@ class LandServiceTest extends Elo7Test {
         createdProbe.id == probeFromLand.id
     }
 
+    def "given Land with Probe put outside land should not create it" () {
+        given:
+        def land = landToCreate()
+        def probe = Fixture.from(Probe.class).gimme("valid")
+        def position = new Position(land.size.x + 1, 0)
+
+        land.probes.put(position, probe)
+
+        when:
+        def createdLand = service.create(land)
+
+        then:
+        thrown UnprocessableEntityException
+    }
+
     def "given existing Land should find it" () {
         given:
         def land = landToCreate()

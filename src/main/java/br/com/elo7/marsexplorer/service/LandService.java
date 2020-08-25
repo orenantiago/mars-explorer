@@ -1,7 +1,6 @@
 package br.com.elo7.marsexplorer.service;
 
 import br.com.elo7.marsexplorer.model.Land;
-import br.com.elo7.marsexplorer.model.Probe;
 import br.com.elo7.marsexplorer.repository.LandRepository;
 import br.com.elo7.marsexplorer.validation.Errors;
 import br.com.elo7.marsexplorer.validation.MarsExplorerError;
@@ -12,8 +11,8 @@ import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityExcepti
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LandService {
@@ -46,11 +45,22 @@ public class LandService {
 
     public void validate(Land land) {
         validator.throwableValidate(land);
-        checkReferences(land);
+        validateProbes(land);
     }
 
-    public void checkReferences(Land land) {
-        land.getProbes().forEach((position, probe) -> probe = probeService.findOrCreate(probe));
+    public void validateProbes(Land land) {
+        validateProbesPositions(land);
+        land.getProbes().values().forEach(probe -> probe = probeService.findOrCreate(probe));
+    }
+
+    public void validateProbesPositions(Land land) {
+        List<MarsExplorerError> positionErrors = land.getProbes().keySet().stream()
+                .filter(position -> !position.isInside(land))
+                .map(position -> Errors.POSITION_OUTSIDE_LAND(position))
+                .collect(Collectors.toList());
+        if (!positionErrors.isEmpty()) {
+            throw new UnprocessableEntityException().withErrors(positionErrors);
+        }
     }
 
     public void deleteById(Long id) {

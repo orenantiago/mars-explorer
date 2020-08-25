@@ -29,4 +29,8 @@ public class Position {
     public static Position at(Integer x, Integer y) {
         return new Position(x, y);
     }
+
+    public boolean isInside(Land that) {
+        return this.getX() <= that.getSize().getX() && this.getY() <= that.getSize().getY();
+    }
 }

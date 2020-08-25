@@ -1,12 +1,13 @@
 package br.com.elo7.marsexplorer.validation.exceptions;
 
 import br.com.elo7.marsexplorer.validation.MarsExplorerError;
+import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+@Getter
 public class BaseException extends RuntimeException {
     private List<MarsExplorerError> errors;
 

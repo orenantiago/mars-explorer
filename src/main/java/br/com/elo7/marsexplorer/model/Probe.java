@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, of={"id"})
 @Entity
 @Table(name = "probes")
 public class Probe extends BaseEntity implements Serializable {
