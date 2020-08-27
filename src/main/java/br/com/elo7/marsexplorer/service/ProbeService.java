@@ -25,7 +25,7 @@ public class ProbeService {
     public Probe findById(Long id) {
         if (id == null)
             throw new BadRequestException().withErrors(Errors.ID_REQUIRED);
-        return repository.findById(id).orElseThrow(() -> new NotFoundException().withErrors(Errors.PROBE_NOT_FOUND));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException().withErrors(Errors.PROBE_NOT_FOUND(id)));
     }
 
     public Probe findOrCreate(Probe probe) {

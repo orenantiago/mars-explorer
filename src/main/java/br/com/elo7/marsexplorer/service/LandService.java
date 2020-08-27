@@ -38,7 +38,7 @@ public class LandService {
     public Land findById(Long id) {
         if (id == null)
             throw new BadRequestException().withErrors(Errors.ID_REQUIRED);
-        return repository.findById(id).orElseThrow(() -> new NotFoundException().withErrors(Errors.LAND_NOT_FOUND));
+        return repository.findById(id).orElseThrow(() -> new NotFoundException().withErrors(Errors.LAND_NOT_FOUND(id)));
     }
 
     public Land update(Long id, Land land) {
@@ -71,7 +71,6 @@ public class LandService {
 
     public void moveProbes(Map<Position, Probe> probeMap) {
         List<MarsExplorerError> movementErrors = new ArrayList<>();
-        probeMap.
         probeMap.forEach((position, probe) -> {
         });
         if (!movementErrors.isEmpty()) {
