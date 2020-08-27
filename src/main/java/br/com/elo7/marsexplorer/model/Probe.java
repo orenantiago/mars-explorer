@@ -31,6 +31,6 @@ public class Probe extends BaseEntity implements Serializable {
             Pair<Position, Direction> state = movement.nextState(position, direction);
             this.direction = state.getValue1();
             return state.getValue0();
-        }).collect(Collectors.toList());
+        }).filter(nextPosition -> !nextPosition.equals(position)).collect(Collectors.toList());
     }
 }

@@ -37,7 +37,7 @@ class ProbeTest extends Elo7Test {
         }})
 
         when:
-        probe.move(new Position(0,0))
+        probe.moveFrom(new Position(0,0))
 
         then:
         probe.direction == Direction.W
@@ -51,7 +51,7 @@ class ProbeTest extends Elo7Test {
         }})
 
         when:
-        probe.move(new Position(0,0))
+        probe.moveFrom(new Position(0,0))
 
         then:
         probe.direction == Direction.N
@@ -65,7 +65,7 @@ class ProbeTest extends Elo7Test {
         }})
 
         when:
-        probe.move(new Position(0,0))
+        probe.moveFrom(new Position(0,0))
 
         then:
         probe.direction == Direction.S
@@ -80,7 +80,7 @@ class ProbeTest extends Elo7Test {
         def initialPosition = Fixture.from(Position.class).gimme("valid")
 
         when:
-        def positions = probe.move(initialPosition)
+        def positions = probe.moveFrom(initialPosition)
 
         then:
         positions.get(0) == Position.at(initialPosition.x, initialPosition.y + 1)
@@ -96,7 +96,7 @@ class ProbeTest extends Elo7Test {
         def initialPosition = Fixture.from(Position.class).gimme("valid")
 
         when:
-        def positions = probe.move(initialPosition)
+        def positions = probe.moveFrom(initialPosition)
 
         then:
         positions.get(0) == Position.at(initialPosition.x + 1, initialPosition.y)
@@ -112,7 +112,7 @@ class ProbeTest extends Elo7Test {
         def initialPosition = Fixture.from(Position.class).gimme("valid")
 
         when:
-        def positions = probe.move(initialPosition)
+        def positions = probe.moveFrom(initialPosition)
 
         then:
         positions.get(0) == Position.at(initialPosition.x, initialPosition.y - 1)
@@ -128,10 +128,26 @@ class ProbeTest extends Elo7Test {
         def initialPosition = Fixture.from(Position.class).gimme("valid")
 
         when:
-        def positions = probe.move(initialPosition)
+        def positions = probe.moveFrom(initialPosition)
 
         then:
         positions.get(0) == Position.at(initialPosition.x-1, initialPosition.y)
         probe.direction == Direction.W
     }
+
+    def "given Probe with movements that don't change position should not move" () {
+        given:
+        def probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
+            add("direction", Direction.W)
+            add("movements", Arrays.asList(Movement.R, Movement.L))
+        }})
+        def initialPosition = Fixture.from(Position.class).gimme("valid")
+
+        when:
+        def positions = probe.moveFrom(initialPosition)
+
+        then:
+        positions.isEmpty()
+    }
+
 }
