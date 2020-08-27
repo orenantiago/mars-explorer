@@ -13,7 +13,7 @@ public enum Movement {
             case R:
                 return Pair.with(position, direction.right());
             case M:
-                return Pair.with(direction.move(position), direction);
+                return Pair.with(position.go(direction), direction);
             default:
                 return Pair.with(position, direction);
 

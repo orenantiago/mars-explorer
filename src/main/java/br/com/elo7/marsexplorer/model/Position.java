@@ -30,7 +30,22 @@ public class Position {
         return new Position(x, y);
     }
 
-    public boolean isInside(Land that) {
-        return this.getX() <= that.getSize().getX() && this.getY() <= that.getSize().getY();
+    public Position go(Direction direction) {
+        switch (direction) {
+            case N:
+                return Position.at(x, y + 1);
+            case E:
+                return Position.at(x + 1, y);
+            case S:
+                return Position.at(x, y - 1);
+            case W:
+                return Position.at(x - 1, y);
+            default:
+                return this;
+        }
+    }
+
+    public boolean isInside(Land land) {
+        return this.getX() <= land.getSize().getX() && this.getY() <= land.getSize().getY();
     }
 }
