@@ -1,7 +1,7 @@
 package br.com.elo7.marsexplorer.service;
 
 import br.com.elo7.marsexplorer.model.Land;
-import br.com.elo7.marsexplorer.model.Position;
+import br.com.elo7.marsexplorer.model.Point;
 import br.com.elo7.marsexplorer.model.Probe;
 import br.com.elo7.marsexplorer.repository.LandRepository;
 import br.com.elo7.marsexplorer.validation.Errors;
@@ -69,7 +69,7 @@ public class LandService {
         }
     }
 
-    public void moveProbes(Map<Position, Probe> probeMap) {
+    public void moveProbes(Map<Point, Probe> probeMap) {
         List<MarsExplorerError> movementErrors = new ArrayList<>();
         probeMap.forEach((position, probe) -> {
         });

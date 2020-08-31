@@ -6,7 +6,7 @@ import org.javatuples.Pair;
 public enum Movement {
     L, R, M;
 
-    public Pair<Position, Direction> nextState(Position position, Direction direction) {
+    public Pair<Point, Direction> nextState(Point position, Direction direction) {
         switch (this) {
             case L:
                 return Pair.with(position, direction.left());

@@ -4,7 +4,7 @@ import br.com.elo7.marsexplorer.Elo7Test
 import br.com.elo7.marsexplorer.model.Direction
 import br.com.elo7.marsexplorer.model.Land
 import br.com.elo7.marsexplorer.model.Movement
-import br.com.elo7.marsexplorer.model.Position
+import br.com.elo7.marsexplorer.model.Point
 import br.com.elo7.marsexplorer.model.Probe
 import br.com.elo7.marsexplorer.repository.LandRepository
 import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException
@@ -54,7 +54,7 @@ class LandServiceTest extends Elo7Test {
         given:
         def land = landToCreate()
         def probe = Fixture.from(Probe.class).gimme("valid")
-        def position = new Position(0, 0);
+        def position = new Point(0, 0);
         probe.id = 123
 
         land.probes.put(position, probe)
@@ -70,7 +70,7 @@ class LandServiceTest extends Elo7Test {
         given:
         def land = landToCreate()
         def probe = Fixture.from(Probe.class).gimme("valid")
-        def position = new Position(0, 0);
+        def position = new Point(0, 0);
 
         land.probes.put(position, probe)
 
@@ -94,8 +94,8 @@ class LandServiceTest extends Elo7Test {
 
         def probe2 = Fixture.from(Probe.class).gimme("valid")
 
-        land.probes.put(Position.at(0,0), probe)
-        land.probes.put(Position.at(1,1), probe2)
+        land.probes.put(Point.at(0,0), probe)
+        land.probes.put(Point.at(1,1), probe2)
 
 
         when:
@@ -113,12 +113,12 @@ class LandServiceTest extends Elo7Test {
             add("movements", Arrays.asList(Movement.M, Movement.R, Movement.M))
         }})
 
-        land.probes.put(Position.at(0,0), probe)
+        land.probes.put(Point.at(0,0), probe)
 
 
         when:
         def createdLand = service.create(land)
-        def probeFromLand = createdLand.probes.get(Position.at(1,1))
+        def probeFromLand = createdLand.probes.get(Point.at(1,1))
         def createdProbe = probeService.findById(probeFromLand.id)
 
         then:
@@ -131,7 +131,7 @@ class LandServiceTest extends Elo7Test {
         given:
         def land = landToCreate()
         def probe = Fixture.from(Probe.class).gimme("valid")
-        def position = new Position(land.size.x + 1, 0)
+        def position = new Point(land.size.x + 1, 0)
 
         land.probes.put(position, probe)
 

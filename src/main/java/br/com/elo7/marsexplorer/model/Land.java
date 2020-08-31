@@ -17,8 +17,8 @@ import java.util.Map;
 public class Land extends BaseEntity implements Serializable {
     @NotNull
     @Valid
-    private Position size;
+    private Point size;
 
     @OneToMany
-    Map<Position, Probe> probes = new HashMap<>();
+    Map<Point, Probe> probes = new HashMap<>();
 }

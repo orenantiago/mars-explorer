@@ -26,9 +26,9 @@ public class Probe extends BaseEntity implements Serializable {
         return getId() != null;
     }
 
-    public List<Position> moveFrom(Position position) {
+    public List<Point> moveFrom(Point position) {
         return movements.stream().map(movement -> {
-            Pair<Position, Direction> state = movement.nextState(position, direction);
+            Pair<Point, Direction> state = movement.nextState(position, direction);
             this.direction = state.getValue1();
             return state.getValue0();
         }).filter(nextPosition -> !nextPosition.equals(position)).collect(Collectors.toList());

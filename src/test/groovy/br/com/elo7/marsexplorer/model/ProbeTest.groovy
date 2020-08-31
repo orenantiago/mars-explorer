@@ -37,7 +37,7 @@ class ProbeTest extends Elo7Test {
         }})
 
         when:
-        probe.moveFrom(new Position(0,0))
+        probe.moveFrom(new Point(0,0))
 
         then:
         probe.direction == Direction.W
@@ -51,7 +51,7 @@ class ProbeTest extends Elo7Test {
         }})
 
         when:
-        probe.moveFrom(new Position(0,0))
+        probe.moveFrom(new Point(0,0))
 
         then:
         probe.direction == Direction.N
@@ -65,7 +65,7 @@ class ProbeTest extends Elo7Test {
         }})
 
         when:
-        probe.moveFrom(new Position(0,0))
+        probe.moveFrom(new Point(0,0))
 
         then:
         probe.direction == Direction.S
@@ -77,13 +77,13 @@ class ProbeTest extends Elo7Test {
             add("direction", Direction.N)
             add("movements", Arrays.asList(Movement.M))
         }})
-        def initialPosition = Fixture.from(Position.class).gimme("valid")
+        def initialPosition = Fixture.from(Point.class).gimme("valid")
 
         when:
         def positions = probe.moveFrom(initialPosition)
 
         then:
-        positions.get(0) == Position.at(initialPosition.x, initialPosition.y + 1)
+        positions.get(0) == Point.at(initialPosition.x, initialPosition.y + 1)
         probe.direction == Direction.N
     }
 
@@ -93,13 +93,13 @@ class ProbeTest extends Elo7Test {
             add("direction", Direction.E)
             add("movements", Arrays.asList(Movement.M))
         }})
-        def initialPosition = Fixture.from(Position.class).gimme("valid")
+        def initialPosition = Fixture.from(Point.class).gimme("valid")
 
         when:
         def positions = probe.moveFrom(initialPosition)
 
         then:
-        positions.get(0) == Position.at(initialPosition.x + 1, initialPosition.y)
+        positions.get(0) == Point.at(initialPosition.x + 1, initialPosition.y)
         probe.direction == Direction.E
     }
 
@@ -109,13 +109,13 @@ class ProbeTest extends Elo7Test {
             add("direction", Direction.S)
             add("movements", Arrays.asList(Movement.M))
         }})
-        def initialPosition = Fixture.from(Position.class).gimme("valid")
+        def initialPosition = Fixture.from(Point.class).gimme("valid")
 
         when:
         def positions = probe.moveFrom(initialPosition)
 
         then:
-        positions.get(0) == Position.at(initialPosition.x, initialPosition.y - 1)
+        positions.get(0) == Point.at(initialPosition.x, initialPosition.y - 1)
         probe.direction == Direction.S
     }
 
@@ -125,13 +125,13 @@ class ProbeTest extends Elo7Test {
             add("direction", Direction.W)
             add("movements", Arrays.asList(Movement.M))
         }})
-        def initialPosition = Fixture.from(Position.class).gimme("valid")
+        def initialPosition = Fixture.from(Point.class).gimme("valid")
 
         when:
         def positions = probe.moveFrom(initialPosition)
 
         then:
-        positions.get(0) == Position.at(initialPosition.x-1, initialPosition.y)
+        positions.get(0) == Point.at(initialPosition.x-1, initialPosition.y)
         probe.direction == Direction.W
     }
 
@@ -141,7 +141,7 @@ class ProbeTest extends Elo7Test {
             add("direction", Direction.W)
             add("movements", Arrays.asList(Movement.R, Movement.L))
         }})
-        def initialPosition = Fixture.from(Position.class).gimme("valid")
+        def initialPosition = Fixture.from(Point.class).gimme("valid")
 
         when:
         def positions = probe.moveFrom(initialPosition)
