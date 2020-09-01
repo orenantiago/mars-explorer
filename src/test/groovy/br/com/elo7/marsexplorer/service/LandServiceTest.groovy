@@ -127,6 +127,25 @@ class LandServiceTest extends Elo7Test {
         createdProbe.direction == Direction.E
     }
 
+//    def "given Land with Probe  creation" () {
+//        given:
+//        Land land = landToCreate()
+//        Probe probe = Fixture.from(Probe.class).gimme("valid", new Rule() {{
+//            add("direction", Direction.N)
+//            add("movements", Arrays.asList(Movement.M, Movement.R, Movement.M))
+//            add("position", Point.at(0,0))
+//        }})
+//        Land createdLand = service.create(land)
+//        probe.land = createdLand
+//        Probe createdProbe = probeService.create(probe)
+//
+//        when:
+//        def foundLand = service.findById(createdLand.id)
+//
+//        then:
+//        foundLand
+//        createdProbe
+//    }
     def "given Land with Probe put outside land should not create it" () {
         given:
         def land = landToCreate()

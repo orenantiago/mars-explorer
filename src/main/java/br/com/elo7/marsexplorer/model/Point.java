@@ -45,7 +45,7 @@ public class Point {
         }
     }
 
-    public boolean isInside(Land land) {
+    public Boolean isInside(Land land) {
         return this.getX() <= land.getSize().getX() && this.getY() <= land.getSize().getY();
     }
 }

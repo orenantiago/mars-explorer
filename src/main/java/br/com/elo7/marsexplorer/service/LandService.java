@@ -13,12 +13,14 @@ import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityExcepti
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class LandService {
     @Autowired
     private LandRepository repository;
@@ -31,7 +33,7 @@ public class LandService {
 
     public Land create(Land land) {
         validate(land);
-        moveProbes(land.getProbes());
+        land.moveProbes();
         return repository.save(land);
     }
 

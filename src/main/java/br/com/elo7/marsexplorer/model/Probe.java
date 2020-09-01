@@ -1,15 +1,14 @@
 package br.com.elo7.marsexplorer.model;
 
+import io.vavr.Tuple2;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.javatuples.Pair;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -26,11 +25,24 @@ public class Probe extends BaseEntity implements Serializable {
         return getId() != null;
     }
 
+    public Boolean hasMovements() {
+        return movements != null && !movements.isEmpty();
+    }
+
     public List<Point> moveFrom(Point position) {
-        return movements.stream().map(movement -> {
-            Pair<Point, Direction> state = movement.nextState(position, direction);
-            this.direction = state.getValue1();
-            return state.getValue0();
-        }).filter(nextPosition -> !nextPosition.equals(position)).collect(Collectors.toList());
+        Point tmpPosition = position;
+        List<Point> nextPositions = new ArrayList<>();
+        nextPositions.add(position);
+        for (Movement movement : movements) {
+            Tuple2<Point, Direction> nextState = movement.nextState(tmpPosition, direction);
+            if (nextState._2 != direction) {
+                direction = nextState._2;
+            }
+            if (nextState._1 != tmpPosition) {
+                tmpPosition = nextState._1;
+                nextPositions.add(tmpPosition);
+            }
+        }
+        return nextPositions;
     }
 }

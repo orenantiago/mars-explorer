@@ -1,21 +1,21 @@
 package br.com.elo7.marsexplorer.model;
 
 
-import org.javatuples.Pair;
+import io.vavr.Tuple2;
 
 public enum Movement {
     L, R, M;
 
-    public Pair<Point, Direction> nextState(Point position, Direction direction) {
+    public Tuple2<Point, Direction> nextState(Point position, Direction direction) {
         switch (this) {
             case L:
-                return Pair.with(position, direction.left());
+                return new Tuple2(position, direction.left());
             case R:
-                return Pair.with(position, direction.right());
+                return new Tuple2(position, direction.right());
             case M:
-                return Pair.with(position.go(direction), direction);
+                return new Tuple2(position.go(direction), direction);
             default:
-                return Pair.with(position, direction);
+                return new Tuple2(position, direction);
 
         }
     }

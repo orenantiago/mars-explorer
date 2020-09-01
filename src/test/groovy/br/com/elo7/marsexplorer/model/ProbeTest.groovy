@@ -7,7 +7,7 @@ import br.com.six2six.fixturefactory.Rule
 class ProbeTest extends Elo7Test {
     def "given valid Probe should not throw errors" () {
         given:
-        def probe = Fixture.from(Probe.class).gimme("valid")
+        Probe probe = Fixture.from(Probe.class).gimme("valid")
 
         when:
         def errors = validator.validate(probe)
@@ -18,7 +18,7 @@ class ProbeTest extends Elo7Test {
 
     def "given Probe without direction should throw error" () {
         given:
-        def probe = Fixture.from(Probe.class).gimme("valid")
+        Probe probe = Fixture.from(Probe.class).gimme("valid")
         probe.direction = null
 
         when:
@@ -31,7 +31,7 @@ class ProbeTest extends Elo7Test {
 
     def "given Probe with North direction when turn left should face West" () {
         given:
-        def probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
+        Probe probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
             add("direction", Direction.N)
             add("movements", Arrays.asList(Movement.L))
         }})
@@ -45,7 +45,7 @@ class ProbeTest extends Elo7Test {
 
     def "given Probe facing West when turn right should face North" () {
         given:
-        def probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
+        Probe probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
             add("direction", Direction.W)
             add("movements", Arrays.asList(Movement.R))
         }})
@@ -59,7 +59,7 @@ class ProbeTest extends Elo7Test {
 
     def "given Probe facing East when turn right should face South" () {
         given:
-        def probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
+        Probe probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
             add("direction", Direction.E)
             add("movements", Arrays.asList(Movement.R))
         }})
@@ -73,81 +73,82 @@ class ProbeTest extends Elo7Test {
 
     def "given Probe facing North should move accordingly" () {
         given:
-        def probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
+        Probe probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
             add("direction", Direction.N)
             add("movements", Arrays.asList(Movement.M))
         }})
-        def initialPosition = Fixture.from(Point.class).gimme("valid")
+        Point initialPosition = Fixture.from(Point.class).gimme("valid")
 
         when:
-        def positions = probe.moveFrom(initialPosition)
+        List<Point> positions = probe.moveFrom(initialPosition)
 
         then:
-        positions.get(0) == Point.at(initialPosition.x, initialPosition.y + 1)
+        positions.get(1) == Point.at(initialPosition.x, initialPosition.y + 1)
         probe.direction == Direction.N
     }
 
     def "given Probe facing East should move accordingly" () {
         given:
-        def probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
+        Probe probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
             add("direction", Direction.E)
             add("movements", Arrays.asList(Movement.M))
         }})
-        def initialPosition = Fixture.from(Point.class).gimme("valid")
+        Point initialPosition = Fixture.from(Point.class).gimme("valid")
 
         when:
-        def positions = probe.moveFrom(initialPosition)
+        List<Point> positions = probe.moveFrom(initialPosition)
 
         then:
-        positions.get(0) == Point.at(initialPosition.x + 1, initialPosition.y)
+        positions.get(1) == Point.at(initialPosition.x + 1, initialPosition.y)
         probe.direction == Direction.E
     }
 
     def "given Probe facing South should move accordingly" () {
         given:
-        def probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
+        Probe probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
             add("direction", Direction.S)
             add("movements", Arrays.asList(Movement.M))
         }})
-        def initialPosition = Fixture.from(Point.class).gimme("valid")
+        Point initialPosition = Fixture.from(Point.class).gimme("valid")
 
         when:
-        def positions = probe.moveFrom(initialPosition)
+        List<Point> positions = probe.moveFrom(initialPosition)
 
         then:
-        positions.get(0) == Point.at(initialPosition.x, initialPosition.y - 1)
+        positions.get(1) == Point.at(initialPosition.x, initialPosition.y - 1)
         probe.direction == Direction.S
     }
 
     def "given Probe facing West should move accordingly" () {
         given:
-        def probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
+        Probe probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
             add("direction", Direction.W)
             add("movements", Arrays.asList(Movement.M))
         }})
-        def initialPosition = Fixture.from(Point.class).gimme("valid")
+        Point initialPosition = Fixture.from(Point.class).gimme("valid")
 
         when:
-        def positions = probe.moveFrom(initialPosition)
+        List<Point> positions = probe.moveFrom(initialPosition)
 
         then:
-        positions.get(0) == Point.at(initialPosition.x-1, initialPosition.y)
+        positions.get(1) == Point.at(initialPosition.x-1, initialPosition.y)
         probe.direction == Direction.W
     }
 
     def "given Probe with movements that don't change position should not move" () {
         given:
-        def probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
+        Probe probe = Fixture.from(Probe.class).gimme("valid", new Rule () {{
             add("direction", Direction.W)
             add("movements", Arrays.asList(Movement.R, Movement.L))
         }})
-        def initialPosition = Fixture.from(Point.class).gimme("valid")
+        Point initialPosition = Fixture.from(Point.class).gimme("valid")
 
         when:
-        def positions = probe.moveFrom(initialPosition)
+        List<Point> positions = probe.moveFrom(initialPosition)
 
         then:
-        positions.isEmpty()
+        positions.get(0) == initialPosition
+        positions.size() == 1
     }
 
 }
