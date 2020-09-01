@@ -18,7 +18,7 @@ public class Probe extends BaseEntity implements Serializable {
     @NotNull
     private Direction direction;
 
-    @Transient
+    @ElementCollection(targetClass = Movement.class)
     private List<Movement> movements = new ArrayList<>();
 
     public Boolean hasId() {

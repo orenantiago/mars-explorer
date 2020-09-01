@@ -84,7 +84,7 @@ class LandServiceTest extends Elo7Test {
         createdProbe.id == probeFromLand.id
     }
 
-    def "given Land with Probes that will collide should throw error" () {
+    def "given Land with Probes that will collide should throw error when moving probes" () {
         given:
         def land = landToCreate()
         def probe = Fixture.from(Probe.class).gimme("valid", new Rule() {{
@@ -97,9 +97,10 @@ class LandServiceTest extends Elo7Test {
         land.probes.put(Point.at(0,0), probe)
         land.probes.put(Point.at(1,1), probe2)
 
+        def created = service.create(land)
 
         when:
-        service.create(land)
+        service.moveProbes(created.id)
 
         then:
         thrown UnprocessableEntityException
@@ -115,37 +116,19 @@ class LandServiceTest extends Elo7Test {
 
         land.probes.put(Point.at(0,0), probe)
 
+        def createdLand = service.create(land)
 
         when:
-        def createdLand = service.create(land)
-        def probeFromLand = createdLand.probes.get(Point.at(1,1))
+        def landAfterMovement = service.moveProbes(createdLand.id)
+        def probeFromLand = landAfterMovement.probes.get(Point.at(1,1))
         def createdProbe = probeService.findById(probeFromLand.id)
 
         then:
-        createdLand
+        landAfterMovement
         probeFromLand.id == createdProbe.id
         createdProbe.direction == Direction.E
     }
 
-//    def "given Land with Probe  creation" () {
-//        given:
-//        Land land = landToCreate()
-//        Probe probe = Fixture.from(Probe.class).gimme("valid", new Rule() {{
-//            add("direction", Direction.N)
-//            add("movements", Arrays.asList(Movement.M, Movement.R, Movement.M))
-//            add("position", Point.at(0,0))
-//        }})
-//        Land createdLand = service.create(land)
-//        probe.land = createdLand
-//        Probe createdProbe = probeService.create(probe)
-//
-//        when:
-//        def foundLand = service.findById(createdLand.id)
-//
-//        then:
-//        foundLand
-//        createdProbe
-//    }
     def "given Land with Probe put outside land should not create it" () {
         given:
         def land = landToCreate()

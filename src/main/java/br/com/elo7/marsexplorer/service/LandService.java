@@ -35,9 +35,14 @@ public class LandService {
     @Autowired
     private ProbeService probeService;
 
+    public Land moveProbes(Long id) {
+        Land land = findById(id);
+        land.moveProbes();
+        return repository.save(land);
+    }
+
     public Land create(Land land) {
         validate(land);
-        land.moveProbes();
         return repository.save(land);
     }
 
@@ -51,7 +56,6 @@ public class LandService {
         findById(id);
         land.setId(id);
         validate(land);
-        land.moveProbes();
         return repository.save(land);
     }
 
