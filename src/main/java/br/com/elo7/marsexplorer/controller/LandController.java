@@ -1,13 +1,10 @@
 package br.com.elo7.marsexplorer.controller;
 
 import br.com.elo7.marsexplorer.model.Land;
-import br.com.elo7.marsexplorer.model.Probe;
 import br.com.elo7.marsexplorer.service.LandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
 public class LandController {
@@ -26,4 +23,21 @@ public class LandController {
         return service.create(land);
     }
 
+    @PutMapping("/lands/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Land update(@PathVariable Long id, @RequestBody Land land) {
+        return service.update(id, land);
+    }
+
+    @DeleteMapping("/lands/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        service.deleteById(id);
+    }
+
+    @PostMapping(value = "/lands/{id}/move-probes")
+    @ResponseStatus(HttpStatus.OK)
+    public Land moveProbes(@PathVariable Long id) {
+        return service.moveProbes(id);
+    }
 }
