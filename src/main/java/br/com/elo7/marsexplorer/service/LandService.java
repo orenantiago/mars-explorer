@@ -10,6 +10,7 @@ import br.com.elo7.marsexplorer.validation.MarsExplorerValidator;
 import br.com.elo7.marsexplorer.validation.exceptions.BadRequestException;
 import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException;
 import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityException;
+import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static io.vavr.control.Try.failure;
+import static io.vavr.control.Try.success;
 
 @Service
 @Transactional
@@ -47,7 +51,7 @@ public class LandService {
         findById(id);
         land.setId(id);
         validate(land);
-        moveProbes(land.getProbes());
+        land.moveProbes();
         return repository.save(land);
     }
 
@@ -68,15 +72,6 @@ public class LandService {
                 .collect(Collectors.toList());
         if (!positionErrors.isEmpty()) {
             throw new UnprocessableEntityException().withErrors(positionErrors);
-        }
-    }
-
-    public void moveProbes(Map<Point, Probe> probeMap) {
-        List<MarsExplorerError> movementErrors = new ArrayList<>();
-        probeMap.forEach((position, probe) -> {
-        });
-        if (!movementErrors.isEmpty()) {
-            throw new UnprocessableEntityException().withErrors(movementErrors);
         }
     }
 

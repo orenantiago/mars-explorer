@@ -123,7 +123,7 @@ class LandServiceTest extends Elo7Test {
 
         then:
         createdLand
-        probeFromLand == createdProbe
+        probeFromLand.id == createdProbe.id
         createdProbe.direction == Direction.E
     }
 
