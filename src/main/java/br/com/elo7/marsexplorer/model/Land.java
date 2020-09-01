@@ -3,9 +3,13 @@ package br.com.elo7.marsexplorer.model;
 import br.com.elo7.marsexplorer.validation.Errors;
 import br.com.elo7.marsexplorer.validation.MarsExplorerError;
 import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityException;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.MapSerializer;
 import io.vavr.control.Try;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -19,9 +23,9 @@ import java.util.stream.Collectors;
 import static io.vavr.control.Try.*;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
 @Table(name = "lands")
+@EqualsAndHashCode(callSuper = true)
 public class Land extends BaseEntity implements Serializable {
     @NotNull
     @Valid

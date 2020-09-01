@@ -2,6 +2,8 @@ package br.com.elo7.marsexplorer.controller
 
 import br.com.elo7.marsexplorer.Elo7Test
 import br.com.elo7.marsexplorer.model.Land
+import br.com.elo7.marsexplorer.model.Point
+import br.com.elo7.marsexplorer.model.Probe
 import br.com.elo7.marsexplorer.service.LandService
 import br.com.six2six.fixturefactory.Fixture
 import org.junit.runner.RunWith
@@ -30,7 +32,7 @@ class LandControllerTest extends Elo7Test {
 
     def "when find land by id should return 'ok' status"() {
         given:
-        def land = Fixture.from(Land.class).gimme("valid")
+        Land land = Fixture.from(Land.class).gimme("valid")
         def existing = service.create(land)
 
         when:
@@ -38,5 +40,16 @@ class LandControllerTest extends Elo7Test {
 
         then:
         results.andExpect(status().isOk())
+    }
+
+    def "when creating land should return 'created' status"() {
+        given:
+        Land land = Fixture.from(Land.class).gimme("valid")
+
+        when:
+        def results = mvc.perform(post("/lands").contentType(MediaType.APPLICATION_JSON).content(toJson(land)))
+
+        then:
+        results.andExpect(status().isCreated())
     }
 }

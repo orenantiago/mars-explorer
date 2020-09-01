@@ -1,5 +1,6 @@
 package br.com.elo7.marsexplorer.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -47,5 +48,16 @@ public class Point {
 
     public Boolean isInside(Land land) {
         return this.getX() <= land.getSize().getX() && this.getY() <= land.getSize().getY();
+    }
+
+    public Point(String p) {
+        String[] split = p.replaceAll("[()\\ ]", "").split(",");
+        x = Integer.valueOf(split[0]);
+        y = Integer.valueOf(split[1]);
+    }
+
+    @JsonValue
+    public String toString() {
+        return String.format("(%d,%d)", x, y);
     }
 }
