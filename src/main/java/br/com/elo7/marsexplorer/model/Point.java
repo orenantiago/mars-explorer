@@ -9,8 +9,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 
-@Embeddable
 @Data
+@Embeddable
 @EqualsAndHashCode(of = {"x", "y"})
 public class Point {
     @NotNull
@@ -47,7 +47,11 @@ public class Point {
     }
 
     public Boolean isInside(Land land) {
-        return this.getX() <= land.getSize().getX() && this.getY() <= land.getSize().getY();
+        return isBetween(x, 0, land.getSize().getX()) && isBetween(y, 0, land.getSize().getY());
+    }
+
+    private Boolean isBetween(Integer i, Integer min, Integer max) {
+        return i <= max && i >= min;
     }
 
     public Point(String p) {

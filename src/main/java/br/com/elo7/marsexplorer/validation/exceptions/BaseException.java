@@ -18,6 +18,7 @@ public class BaseException extends RuntimeException {
 
     @JsonProperty
     private List<MarsExplorerError> errors;
+
     public BaseException(HttpStatus status) {
         this.status = status;
     }

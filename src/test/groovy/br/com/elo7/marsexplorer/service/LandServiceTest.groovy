@@ -138,11 +138,27 @@ class LandServiceTest extends Elo7Test {
         land.probes.put(position, probe)
 
         when:
-        def createdLand = service.create(land)
+        service.create(land)
 
         then:
         thrown UnprocessableEntityException
     }
+
+    def "given Land with Probe put on negative point should not create it" () {
+        given:
+        def land = landToCreate()
+        def probe = Fixture.from(Probe.class).gimme("valid")
+        def position = Point.at(-1, 0)
+
+        land.probes.put(position, probe)
+
+        when:
+        service.create(land)
+
+        then:
+        thrown UnprocessableEntityException
+    }
+
 
     def "given existing Land should find it" () {
         given:
