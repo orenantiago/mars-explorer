@@ -6,7 +6,7 @@ This is my solution to elo7's technical [challenge](https://gist.github.com/elo7
 The requirements to run this projects are Java 1.8, docker and docker-compose.
 
 ### Running the project
-To run the project, you must go to the main folder, and run the following commands:
+To run the project, you must go to the main folder, and run the following commands:     
 ```./gradlew build```    
-```sudo docker-compose up```
+```sudo docker-compose up```     
 Then, the application will be (fingers crossed) succesfully running and available for connections in the port 8080 of the localhost.
