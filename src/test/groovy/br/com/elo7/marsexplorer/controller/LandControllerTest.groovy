@@ -78,6 +78,15 @@ class LandControllerTest extends Elo7Test {
         results.andExpect(status().isOk())
     }
 
+    def "when find all lands should return 'ok' status"() {
+        when:
+        def results = mvc.perform(get("/lands"))
+
+        then:
+        results.andExpect(status().isOk())
+    }
+
+
     def "when deleting land should return 'no content' status"() {
         given:
         Land land = Fixture.from(Land.class).gimme("valid")

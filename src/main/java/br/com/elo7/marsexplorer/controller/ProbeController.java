@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ProbeController {
     @Autowired
@@ -15,6 +17,12 @@ public class ProbeController {
     @ResponseStatus(HttpStatus.OK)
     public Probe getLand(@PathVariable Long id) {
         return service.findById(id);
+    }
+
+    @GetMapping("/probes")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Probe> findAll() {
+        return service.findAll();
     }
 
     @PutMapping("/probes/{id}")

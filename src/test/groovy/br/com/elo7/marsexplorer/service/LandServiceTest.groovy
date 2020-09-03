@@ -245,6 +245,16 @@ class LandServiceTest extends Elo7Test {
         thrown UnprocessableEntityException
     }
 
+    def "should find known lands when findAll" () {
+        when:
+        def found = service.findAll()
+
+        then:
+        found
+        found.size() > 0
+    }
+
+
     private def landToCreate() {
         def land = Fixture.from(Land.class).gimme("valid")
         return land

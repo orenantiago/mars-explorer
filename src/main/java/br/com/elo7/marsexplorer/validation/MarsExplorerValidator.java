@@ -1,5 +1,6 @@
 package br.com.elo7.marsexplorer.validation;
 
+import br.com.elo7.marsexplorer.validation.errors.MarsExplorerError;
 import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityException;
 import org.springframework.stereotype.Component;
 

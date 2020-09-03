@@ -2,12 +2,14 @@ package br.com.elo7.marsexplorer.service;
 
 import br.com.elo7.marsexplorer.model.Probe;
 import br.com.elo7.marsexplorer.repository.ProbeRepository;
-import br.com.elo7.marsexplorer.validation.Errors;
+import br.com.elo7.marsexplorer.validation.errors.Errors;
 import br.com.elo7.marsexplorer.validation.MarsExplorerValidator;
 import br.com.elo7.marsexplorer.validation.exceptions.BadRequestException;
 import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ProbeService {
@@ -26,6 +28,10 @@ public class ProbeService {
         if (id == null)
             throw new BadRequestException().withErrors(Errors.ID_REQUIRED);
         return repository.findById(id).orElseThrow(() -> new NotFoundException().withErrors(Errors.PROBE_NOT_FOUND(id)));
+    }
+
+    public List<Probe> findAll() {
+        return repository.findAll();
     }
 
     public Probe findOrCreate(Probe probe) {

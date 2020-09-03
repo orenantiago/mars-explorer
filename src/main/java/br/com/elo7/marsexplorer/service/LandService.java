@@ -1,11 +1,9 @@
 package br.com.elo7.marsexplorer.service;
 
 import br.com.elo7.marsexplorer.model.Land;
-import br.com.elo7.marsexplorer.model.Point;
-import br.com.elo7.marsexplorer.model.Probe;
 import br.com.elo7.marsexplorer.repository.LandRepository;
-import br.com.elo7.marsexplorer.validation.Errors;
-import br.com.elo7.marsexplorer.validation.MarsExplorerError;
+import br.com.elo7.marsexplorer.validation.errors.Errors;
+import br.com.elo7.marsexplorer.validation.errors.MarsExplorerError;
 import br.com.elo7.marsexplorer.validation.MarsExplorerValidator;
 import br.com.elo7.marsexplorer.validation.exceptions.BadRequestException;
 import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException;
@@ -44,6 +42,10 @@ public class LandService {
         if (id == null)
             throw new BadRequestException().withErrors(Errors.ID_REQUIRED);
         return repository.findById(id).orElseThrow(() -> new NotFoundException().withErrors(Errors.LAND_NOT_FOUND(id)));
+    }
+
+    public List<Land> findAll() {
+        return repository.findAll();
     }
 
     public Land update(Long id, Land land) {

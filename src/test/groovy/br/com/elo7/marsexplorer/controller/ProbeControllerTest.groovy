@@ -61,6 +61,14 @@ class ProbeControllerTest extends Elo7Test {
         results.andExpect(status().isOk())
     }
 
+    def "when find all probes should return 'ok' status"() {
+        when:
+        def results = mvc.perform(get("/probes"))
+
+        then:
+        results.andExpect(status().isOk())
+    }
+
     def "when deleting probe should return 'no content' status"() {
         given:
         Probe probe = Fixture.from(Probe.class).gimme("valid")

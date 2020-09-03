@@ -151,4 +151,14 @@ class ProbeServiceTest extends Elo7Test {
         thrown UnprocessableEntityException
     }
 
+
+    def "should find known probes when findAll" () {
+        when:
+        def found = service.findAll()
+
+        then:
+        found
+        found.size() > 0
+    }
+
 }
