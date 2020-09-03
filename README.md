@@ -1,5 +1,5 @@
 # MarsExplorer
-This is my solution to elo7's technical [challenge](https://gist.github.com/elo7-developer/1a40c96a5d062b69f02c). A postman documentation to help clarify how to use the API can be found [here](https://documenter.getpostman.com/view/2581871/TVCfWTSX). 
+This is my solution to Elo7's technical [challenge](https://gist.github.com/elo7-developer/1a40c96a5d062b69f02c). A postman documentation to help clarify how to use the API can be found [here](https://documenter.getpostman.com/view/2581871/TVCfWTSX). 
 
 ## How to Run the project
 ### Requirements
