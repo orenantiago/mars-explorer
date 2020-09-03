@@ -28,7 +28,7 @@ public class Land extends BaseEntity implements Serializable {
     @Valid
     private Point size;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     Map<Point, Probe> probes = new HashMap<>();
 
     public void moveProbes() {
@@ -51,7 +51,7 @@ public class Land extends BaseEntity implements Serializable {
 
         for(Point position: positions) {
             if (probes.containsKey(position)) {
-              return failure(Errors.PROBES_COLLIDED(probe, probes.remove(position), position));
+              return failure(Errors.PROBES_COLLIDED(probe, probes.get(position), position));
             }
             else if (!position.isInside(this)) {
                 return failure(Errors.POSITION_OUTSIDE_LAND(position));

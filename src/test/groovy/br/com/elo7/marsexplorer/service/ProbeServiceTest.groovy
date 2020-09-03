@@ -1,6 +1,8 @@
 package br.com.elo7.marsexplorer.service
 
 import br.com.elo7.marsexplorer.Elo7Test
+import br.com.elo7.marsexplorer.model.Land
+import br.com.elo7.marsexplorer.model.Point
 import br.com.elo7.marsexplorer.model.Probe
 import br.com.elo7.marsexplorer.repository.ProbeRepository
 import br.com.elo7.marsexplorer.exception.exceptions.NotFoundException
@@ -13,6 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest
 class ProbeServiceTest extends Elo7Test {
     @Autowired
     ProbeService service;
+
+    @Autowired
+    LandService landService;
 
     @Autowired
     ProbeRepository repository;
@@ -42,30 +47,6 @@ class ProbeServiceTest extends Elo7Test {
         thrown UnprocessableEntityException
     }
 
-    def "given unknown Probe should create it when findOrCreate" () {
-        given:
-        def probe = Fixture.from(Probe.class).gimme("valid")
-
-        when:
-        def created = service.findOrCreate(probe)
-        def found = repository.findById(created.id)
-
-        then:
-        created
-        found
-    }
-
-    def "given known Probe should find it when findOrCreate" () {
-        given:
-        def probe = Fixture.from(Probe.class).gimme("valid")
-        def existing = service.create(probe)
-        when:
-        def found = service.findOrCreate(existing)
-
-        then:
-        found.id == existing.id
-    }
-
     def "given existing Probe should find it" () {
         given:
         def probe = Fixture.from(Probe.class).gimme("valid")
@@ -87,29 +68,6 @@ class ProbeServiceTest extends Elo7Test {
 
         then:
         thrown NotFoundException
-    }
-
-    def "given non existing Probe should not delete it" () {
-        given:
-        def unknownId = 123
-
-        when:
-        service.deleteById(unknownId)
-
-        then:
-        thrown NotFoundException
-    }
-
-    def "given existing Probe should delete it" () {
-        given:
-        def probe = Fixture.from(Probe.class).gimme("valid")
-        def existing = service.create(probe)
-
-        when:
-        service.deleteById(existing.id)
-        def found = repository.findById(existing.id).orElse(null)
-        then:
-        found == null
     }
 
     def "given non existing Probe should not update it" () {

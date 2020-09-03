@@ -50,23 +50,7 @@ class LandServiceTest extends Elo7Test {
         thrown UnprocessableEntityException
     }
 
-    def "given Land with unknown Probe should not create it" () {
-        given:
-        def land = landToCreate()
-        def probe = Fixture.from(Probe.class).gimme("valid")
-        def position = new Point(0, 0);
-        probe.id = 123
-
-        land.probes.put(position, probe)
-
-        when:
-        service.create(land)
-
-        then:
-        thrown NotFoundException
-    }
-
-    def "given Land with Probe without id should create Land and Probe" () {
+    def "given Land with Probe should create Land and Probe" () {
         given:
         def land = landToCreate()
         def probe = Fixture.from(Probe.class).gimme("valid")
@@ -104,29 +88,6 @@ class LandServiceTest extends Elo7Test {
 
         then:
         thrown UnprocessableEntityException
-    }
-
-    def "given Land with Probe with movements should execute them on land creation" () {
-        given:
-        def land = landToCreate()
-        def probe = Fixture.from(Probe.class).gimme("valid", new Rule() {{
-            add("direction", Direction.N)
-            add("movements", Arrays.asList(Movement.M, Movement.R, Movement.M))
-        }})
-
-        land.probes.put(Point.at(0,0), probe)
-
-        def createdLand = service.create(land)
-
-        when:
-        def landAfterMovement = service.moveProbes(createdLand.id)
-        def probeFromLand = landAfterMovement.probes.get(Point.at(1,1))
-        def createdProbe = probeService.findById(probeFromLand.id)
-
-        then:
-        landAfterMovement
-        probeFromLand.id == createdProbe.id
-        createdProbe.direction == Direction.E
     }
 
     def "given Land with Probe put outside land should not create it" () {

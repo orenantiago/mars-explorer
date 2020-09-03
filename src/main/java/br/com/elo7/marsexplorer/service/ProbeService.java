@@ -34,22 +34,10 @@ public class ProbeService {
         return repository.findAll();
     }
 
-    public Probe findOrCreate(Probe probe) {
-        if (probe == null)
-            throw new BadRequestException().withErrors(Errors.PROBE_REQUIRED);
-
-        return probe.hasId() ? findById(probe.getId()) : create(probe);
-    }
-
     public Probe update(Long id, Probe probe) {
         findById(id);
         validator.throwableValidate(probe);
         probe.setId(id);
         return repository.save(probe);
-    }
-    
-    public void deleteById(Long id) {
-        Probe found = findById(id);
-        repository.delete(found);
     }
 }

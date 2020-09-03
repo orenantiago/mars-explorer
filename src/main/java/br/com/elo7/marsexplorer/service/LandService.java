@@ -62,7 +62,7 @@ public class LandService {
 
     public void validateProbes(Land land) {
         validateProbesPositions(land);
-        land.getProbes().values().forEach(probe -> probe = probeService.findOrCreate(probe));
+        land.getProbes().values().forEach(probe -> probe = probeService.create(probe));
     }
 
     public void validateProbesPositions(Land land) {

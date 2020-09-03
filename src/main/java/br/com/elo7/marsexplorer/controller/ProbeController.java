@@ -30,10 +30,4 @@ public class ProbeController {
     public Probe update(@PathVariable Long id, @RequestBody Probe probe) {
         return service.update(id, probe);
     }
-
-    @DeleteMapping("/probes/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        service.deleteById(id);
-    }
 }
