@@ -3,8 +3,8 @@ package br.com.elo7.marsexplorer.service
 import br.com.elo7.marsexplorer.Elo7Test
 import br.com.elo7.marsexplorer.model.Probe
 import br.com.elo7.marsexplorer.repository.ProbeRepository
-import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException
-import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityException
+import br.com.elo7.marsexplorer.exception.exceptions.NotFoundException
+import br.com.elo7.marsexplorer.exception.exceptions.UnprocessableEntityException
 import br.com.six2six.fixturefactory.Fixture
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

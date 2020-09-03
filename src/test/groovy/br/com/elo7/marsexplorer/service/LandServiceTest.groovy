@@ -7,8 +7,8 @@ import br.com.elo7.marsexplorer.model.Movement
 import br.com.elo7.marsexplorer.model.Point
 import br.com.elo7.marsexplorer.model.Probe
 import br.com.elo7.marsexplorer.repository.LandRepository
-import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException
-import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityException
+import br.com.elo7.marsexplorer.exception.exceptions.NotFoundException
+import br.com.elo7.marsexplorer.exception.exceptions.UnprocessableEntityException
 import br.com.six2six.fixturefactory.Fixture
 import br.com.six2six.fixturefactory.Rule
 import org.springframework.beans.factory.annotation.Autowired
