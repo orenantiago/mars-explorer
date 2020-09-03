@@ -2,10 +2,10 @@ package br.com.elo7.marsexplorer.service;
 
 import br.com.elo7.marsexplorer.model.Probe;
 import br.com.elo7.marsexplorer.repository.ProbeRepository;
-import br.com.elo7.marsexplorer.validation.errors.Errors;
+import br.com.elo7.marsexplorer.exception.errors.Errors;
 import br.com.elo7.marsexplorer.validation.MarsExplorerValidator;
-import br.com.elo7.marsexplorer.validation.exceptions.BadRequestException;
-import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException;
+import br.com.elo7.marsexplorer.exception.exceptions.BadRequestException;
+import br.com.elo7.marsexplorer.exception.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

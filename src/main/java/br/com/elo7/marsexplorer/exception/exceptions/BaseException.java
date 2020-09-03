@@ -1,6 +1,6 @@
-package br.com.elo7.marsexplorer.validation.exceptions;
+package br.com.elo7.marsexplorer.exception.exceptions;
 
-import br.com.elo7.marsexplorer.validation.errors.MarsExplorerError;
+import br.com.elo7.marsexplorer.exception.errors.MarsExplorerError;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

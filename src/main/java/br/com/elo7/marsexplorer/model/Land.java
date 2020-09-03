@@ -1,8 +1,8 @@
 package br.com.elo7.marsexplorer.model;
 
-import br.com.elo7.marsexplorer.validation.errors.Errors;
-import br.com.elo7.marsexplorer.validation.errors.MarsExplorerError;
-import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityException;
+import br.com.elo7.marsexplorer.exception.errors.Errors;
+import br.com.elo7.marsexplorer.exception.errors.MarsExplorerError;
+import br.com.elo7.marsexplorer.exception.exceptions.UnprocessableEntityException;
 import io.vavr.control.Try;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -2,12 +2,12 @@ package br.com.elo7.marsexplorer.service;
 
 import br.com.elo7.marsexplorer.model.Land;
 import br.com.elo7.marsexplorer.repository.LandRepository;
-import br.com.elo7.marsexplorer.validation.errors.Errors;
-import br.com.elo7.marsexplorer.validation.errors.MarsExplorerError;
+import br.com.elo7.marsexplorer.exception.errors.Errors;
+import br.com.elo7.marsexplorer.exception.errors.MarsExplorerError;
 import br.com.elo7.marsexplorer.validation.MarsExplorerValidator;
-import br.com.elo7.marsexplorer.validation.exceptions.BadRequestException;
-import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException;
-import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityException;
+import br.com.elo7.marsexplorer.exception.exceptions.BadRequestException;
+import br.com.elo7.marsexplorer.exception.exceptions.NotFoundException;
+import br.com.elo7.marsexplorer.exception.exceptions.UnprocessableEntityException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

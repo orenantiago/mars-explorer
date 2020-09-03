@@ -1,6 +1,6 @@
 package br.com.elo7.marsexplorer.configuration;
 
-import br.com.elo7.marsexplorer.validation.exceptions.BaseException;
+import br.com.elo7.marsexplorer.exception.exceptions.BaseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

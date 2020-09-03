@@ -1,4 +1,4 @@
-package br.com.elo7.marsexplorer.validation.errors;
+package br.com.elo7.marsexplorer.exception.errors;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

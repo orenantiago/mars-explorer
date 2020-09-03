@@ -1,4 +1,4 @@
-package br.com.elo7.marsexplorer.validation.errors;
+package br.com.elo7.marsexplorer.exception.errors;
 
 import br.com.elo7.marsexplorer.model.Point;
 import br.com.elo7.marsexplorer.model.Probe;
