@@ -46,19 +46,6 @@ class ProbeControllerTest extends Elo7Test {
         results.andExpect(status().isOk())
     }
 
-    def "when creating probe should return 'created' status"() {
-        given:
-        Probe probe = Fixture.from(Probe.class).gimme("valid")
-
-        when:
-        def results = mvc.perform(post("/probes")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(probe)))
-
-        then:
-        results.andExpect(status().isCreated())
-    }
-
     def "when updating probe should return 'ok' status"() {
         given:
         Probe probe = Fixture.from(Probe.class).gimme("valid")

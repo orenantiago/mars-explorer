@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static io.vavr.control.Try.*;
@@ -50,10 +51,8 @@ public class Land extends BaseEntity implements Serializable {
     }
 
     public Try move(List<Point> positions) {
-        if (positions.size() == 1)
-            return success(null);
-
         Probe probe = probes.remove(positions.remove(0));
+
         for(Point position: positions) {
             if (probes.containsKey(position)) {
               return failure(Errors.PROBES_COLLIDED(probe, probes.remove(position), position));
@@ -62,7 +61,12 @@ public class Land extends BaseEntity implements Serializable {
                 return failure(Errors.POSITION_OUTSIDE_LAND(position));
             }
         }
+
         probes.put(positions.get(positions.size()-1), probe);
         return success(null);
+    }
+
+    public Set<Point> positions() {
+        return probes.keySet();
     }
 }

@@ -17,12 +17,6 @@ public class ProbeController {
         return service.findById(id);
     }
 
-    @PostMapping(value = "/probes")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Probe create(@RequestBody Probe probe) {
-        return service.create(probe);
-    }
-
     @PutMapping("/probes/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Probe update(@PathVariable Long id, @RequestBody Probe probe) {

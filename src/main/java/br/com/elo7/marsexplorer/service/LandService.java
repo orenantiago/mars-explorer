@@ -10,18 +10,12 @@ import br.com.elo7.marsexplorer.validation.MarsExplorerValidator;
 import br.com.elo7.marsexplorer.validation.exceptions.BadRequestException;
 import br.com.elo7.marsexplorer.validation.exceptions.NotFoundException;
 import br.com.elo7.marsexplorer.validation.exceptions.UnprocessableEntityException;
-import io.vavr.control.Try;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-
-import static io.vavr.control.Try.failure;
-import static io.vavr.control.Try.success;
 
 @Service
 @Transactional
@@ -70,7 +64,7 @@ public class LandService {
     }
 
     public void validateProbesPositions(Land land) {
-        List<MarsExplorerError> positionErrors = land.getProbes().keySet().stream()
+        List<MarsExplorerError> positionErrors = land.positions().stream()
                 .filter(position -> !position.isInside(land))
                 .map(position -> Errors.POSITION_OUTSIDE_LAND(position))
                 .collect(Collectors.toList());
